@@ -49,6 +49,7 @@ public class FDRect extends Shape {
 		g.drawRect(minX, minY, maxX-minX-1, maxY-minY-1); // drawRect adds an additional 1 pixel onto usual length & width
 		g.setColor(getFill());
 		g.fillRect(minX+border, minY+border, (maxX-minX)-border*2, (maxY-minY)-border*2);
+		setPoints(minX,minY,maxX,maxY);
 	}
 	
 	@Override
