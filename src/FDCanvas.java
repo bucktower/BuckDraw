@@ -6,7 +6,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JPanel;
 
@@ -102,11 +105,66 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	public void openFile(File theFile)
 	{
 		System.out.println("The user just opted to open file: "+theFile);
+		try {
+			Scanner dataFile = new Scanner(theFile);
+			System.out.println(dataFile.hasNext());
+			
+			while(dataFile.hasNext()){
+				String line = dataFile.nextLine();
+				String[] parts = line.split("\t");
+				
+				Color fill = new Color(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
+				Color stroke = new Color(Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), Integer.parseInt(parts[6]));
+				
+				switch(Integer.parseInt(parts[0])) {
+				case 1: // line
+					System.out.println("Creating a line from file.");
+					FDLine tempLine = new FDLine(parts);
+					shapes.add(tempLine);
+					break;
+				case 2: // rectangle
+					System.out.println("Creating a rectangle from file.");
+					FDRect tempRect = new FDRect(parts);
+					shapes.add(tempRect);
+					break;
+				default:
+					System.out.println("Shape type not recognized when loading shapes");
+					break;
+				}
+			}
+			dataFile.close();
+			shapeListHasChangedSinceLastDraw = true;
+			repaint();
+		} catch (FileNotFoundException fnfe) {
+			System.out.println("Could not find file.");
+		}
 	}
 	
 	public void saveFile(File theFile)
 	{
 		System.out.println("The user just opted to save file: "+theFile);
+		
+		// creating a file
+        PrintWriter printWriter = null;
+                
+        try
+        {
+            printWriter = new PrintWriter(theFile);
+            for(Shape s: shapes) {
+            	printWriter.println(s.toString());
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if ( printWriter != null ) 
+            {
+                printWriter.close();
+            }
+        }
 	}
 	//-----------------------------------------------
 	
