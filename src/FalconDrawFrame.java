@@ -107,10 +107,18 @@ public class FalconDrawFrame extends JFrame implements ActionListener
 	 */
 	public void actionPerformed(ActionEvent ae)
 	{
-		if (ae.getSource() == newMI)
+		if (ae.getSource() == newMI) {
+			if(canvasPanel.isDirty) {
+				handleSaveMI();
+			}
 			handleNewMI();
-		if (ae.getSource() == openMI)
+		}
+		if (ae.getSource() == openMI) {
+			if(canvasPanel.isDirty) {
+				handleSaveMI();
+			}
 			handleOpenMI();
+		}
 		if (ae.getSource() == saveMI)
 			handleSaveMI();
 		if (ae.getSource() == saveAsMI)
@@ -187,6 +195,7 @@ public class FalconDrawFrame extends JFrame implements ActionListener
 		{
 			theFile = chooser.getSelectedFile();
 			canvasPanel.saveFile(theFile);
+			canvasPanel.setClean();
 		}
 		// otherwise, the user picked "cancel," so do nothing.
 	}

@@ -24,6 +24,8 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	
 	private ArrayList<Shape> shapes;
 	
+	public boolean isDirty;
+	
 	public FDCanvas()
 	{
 		super();
@@ -53,6 +55,9 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 			//---------------------------------------------
 			// Temporary code to demonstrate that the toolbox buttons work....
 			//  ......  you'll want something different here.
+			if(shapes.size() > 0) {
+				isDirty = true;
+			}
 			for(Shape s: shapes) {
 				s.drawSelf(g2);
 			}
@@ -70,6 +75,11 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 		
 		
 	}
+	
+	public void setClean() {
+		isDirty = false;
+	}
+	
 	// --------------------------------------------------
 	// Respond to toolbar changes - these methods are called by the FDToolbar.
 	public void setTool(int t)
@@ -100,6 +110,10 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	public void handleNewMenuItem()
 	{
 		System.out.println("The user just selected 'New.'");
+		
+		shapes.clear();
+		shapeListHasChangedSinceLastDraw = true;
+		repaint();
 	}
 	
 	public void openFile(File theFile)
@@ -223,20 +237,20 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	public void mouseReleased(MouseEvent me)
 	{
 		if(tempShape != null) {
-			if (currentTool == Shape.LINE_TYPE)
-			{
+//			if (currentTool == Shape.LINE_TYPE)
+//			{
 				shapes.add(tempShape);
 				shapeListHasChangedSinceLastDraw = true;
 				tempShape = null;
 				repaint();
-			}
-			else if (currentTool == Shape.RECT_TYPE)
-			{
-				shapes.add(tempShape);
-				shapeListHasChangedSinceLastDraw = true;
-				tempShape = null;
-				repaint();
-			}
+//			}
+//			else if (currentTool == Shape.RECT_TYPE)
+//			{
+//				shapes.add(tempShape);
+//				shapeListHasChangedSinceLastDraw = true;
+//				tempShape = null;
+//				repaint();
+//			}
 		}
 		System.out.println("User released mouse at: "+me.getX()+", "+me.getY());
 	}
