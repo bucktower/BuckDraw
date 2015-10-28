@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class BuckDrawFrame extends JFrame implements ActionListener
 {
@@ -39,6 +41,23 @@ public class BuckDrawFrame extends JFrame implements ActionListener
 	 */
 	public void setupMenus()
 	{
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
+		String lcOSName = System.getProperty("os.name").toLowerCase();
+		if(lcOSName.startsWith("mac os x")) {
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+		}
+		
 		JMenuBar myMenubar = new JMenuBar();
 		
 		myMenubar.add(createFileMenu());
