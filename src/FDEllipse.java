@@ -1,13 +1,13 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class FDRect extends Shape {
+public class FDEllipse extends Shape {
 
 	private int x1,x2,y1,y2;
 	
 	private int borderPadding = 1;
 	
-	public FDRect(String[] data, int startIndex) 
+	public FDEllipse(String[] data, int startIndex) 
 	{
 		super(data,startIndex); // this grabs the colors, which takes values 0-5.
 		try
@@ -24,12 +24,12 @@ public class FDRect extends Shape {
 		}
 	}
 
-	public FDRect(String[] data) 
+	public FDEllipse(String[] data) 
 	{
 		this(data,1);
 	}
 
-	public FDRect() 
+	public FDEllipse() 
 	{
 		super();
 	}
@@ -47,11 +47,11 @@ public class FDRect extends Shape {
 		int maxY = Math.max(y1, y2);
 		if(getStroke() != null) {
 			g.setColor(getStroke());
-			g.drawRect(minX, minY, maxX-minX-1, maxY-minY-1); // drawRect adds an additional 1 pixel onto usual length & width
+			g.drawOval(minX, minY, maxX-minX, maxY-minY);
 		}
 		if(getFill() != null) {
 			g.setColor(getFill());
-			g.fillRect(minX+borderPadding, minY+borderPadding, (maxX-minX)-borderPadding*2, (maxY-minY)-borderPadding*2);
+			g.fillOval(minX+borderPadding, minY+borderPadding, (maxX-minX)-borderPadding*2, (maxY-minY)-borderPadding*2);
 		}
 		setPoints(minX,minY,maxX,maxY);
 	}
@@ -93,7 +93,7 @@ public class FDRect extends Shape {
 
 	@Override
 	public int getType() {
-		return Shape.RECT_TYPE;
+		return Shape.OVAL_TYPE;
 	}
 
 	/**

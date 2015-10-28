@@ -141,6 +141,16 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 					FDRect tempRect = new FDRect(parts);
 					shapes.add(tempRect);
 					break;
+				case 3: // ellipse
+					System.out.println("Creating an ellipse from file.");
+					FDEllipse tempEllipse = new FDEllipse(parts);
+					shapes.add(tempEllipse);
+					break;
+//				case 4: // polygon
+//					System.out.println("Creating a polygon from file.");
+//					FDEllipse tempPolygon = new FDPolygon(parts);
+//					shapes.add(tempPolygon);
+//					break;
 				default:
 					System.out.println("Shape type not recognized when loading shapes");
 					break;
@@ -233,24 +243,25 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 			tempRect.setPoints(mouseStartX, mouseStartY, mouseStartX, mouseStartY);
 			tempShape = tempRect;
 		}
+		else if (currentTool == Shape.OVAL_TYPE)
+		{
+			FDEllipse tempEllipse = new FDEllipse();
+			tempEllipse.setFill(fillColor);
+			tempEllipse.setStroke(strokeColor);
+			tempEllipse.setPoints(mouseStartX, mouseStartY, mouseStartX, mouseStartY);
+			tempShape = tempEllipse;
+		}
 	}
 	public void mouseReleased(MouseEvent me)
 	{
 		if(tempShape != null) {
-//			if (currentTool == Shape.LINE_TYPE)
-//			{
+			if (currentTool == Shape.LINE_TYPE || currentTool == Shape.RECT_TYPE || currentTool == Shape.OVAL_TYPE)
+			{
 				shapes.add(tempShape);
 				shapeListHasChangedSinceLastDraw = true;
 				tempShape = null;
 				repaint();
-//			}
-//			else if (currentTool == Shape.RECT_TYPE)
-//			{
-//				shapes.add(tempShape);
-//				shapeListHasChangedSinceLastDraw = true;
-//				tempShape = null;
-//				repaint();
-//			}
+			}
 		}
 		System.out.println("User released mouse at: "+me.getX()+", "+me.getY());
 	}
@@ -264,12 +275,7 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	}
 	public void mouseExited(MouseEvent me)
 	{
-		if (currentTool == Shape.LINE_TYPE)
-		{
-			tempShape = null;
-			repaint();
-		}
-		if (currentTool == Shape.RECT_TYPE)
+		if (currentTool == Shape.LINE_TYPE || currentTool == Shape.RECT_TYPE || currentTool == Shape.OVAL_TYPE)
 		{
 			tempShape = null;
 			repaint();
@@ -291,10 +297,16 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 			((FDLine)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
 			repaint();
 		}
-		if (currentTool == Shape.RECT_TYPE)
+		else if (currentTool == Shape.RECT_TYPE)
 		{
 			if (tempShape != null)
 			((FDRect)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
+			repaint();
+		}
+		else if (currentTool == Shape.OVAL_TYPE)
+		{
+			if (tempShape != null)
+			((FDEllipse)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
 			repaint();
 		}
 	}

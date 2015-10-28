@@ -10,7 +10,7 @@ public abstract class Shape {
 	public static final int LINE_TYPE = 1; // "static" means this single variable belongs to this
 	public static final int RECT_TYPE = 2; // class and is shared by all the members of the class.
 	public static final int OVAL_TYPE = 3; // "final" means it's a constant. So these TYPE variables
-	public static final int TRIANGLE_TYPE = 4; // are shared constants that are publicly accessible.
+	public static final int POLYGON_TYPE = 4; // are shared constants that are publicly accessible.
 
 	
 	public Shape(String[] data, int startIndex)
