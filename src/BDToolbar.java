@@ -18,10 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class FDToolbar extends JPanel implements ActionListener
+public class BDToolbar extends JPanel implements ActionListener
 {
 
-	private FDCanvas theCanvas;
+	private BDCanvas theCanvas;
 	private JButton[] buttonList;
 	private JButton   fillColorButton, strokeColorButton;
 	private Color     fillColor,       strokeColor;
@@ -30,7 +30,7 @@ public class FDToolbar extends JPanel implements ActionListener
 	private String[] iconFiles = {"Arrow.png","Line.png","Rect.png","Circle.png","Triangle.png"};
 	private JColorChooser myColorChooser;
 	
-	public FDToolbar(FDCanvas cv)
+	public BDToolbar(BDCanvas cv)
 	{
 		super();
 		theCanvas = cv;

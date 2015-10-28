@@ -1,13 +1,13 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class FDRect extends Shape {
+public class BDRect extends Shape {
 
 	private int x1,x2,y1,y2;
 	
 	private int borderPadding = 1;
 	
-	public FDRect(String[] data, int startIndex) 
+	public BDRect(String[] data, int startIndex) 
 	{
 		super(data,startIndex); // this grabs the colors, which takes values 0-5.
 		try
@@ -24,12 +24,12 @@ public class FDRect extends Shape {
 		}
 	}
 
-	public FDRect(String[] data) 
+	public BDRect(String[] data) 
 	{
 		this(data,1);
 	}
 
-	public FDRect() 
+	public BDRect() 
 	{
 		super();
 	}

@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 import javax.swing.JPanel;
 
-public class FDCanvas extends JPanel implements MouseListener, MouseMotionListener{
+public class BDCanvas extends JPanel implements MouseListener, MouseMotionListener{
 
 	private int currentTool;
 	private Color fillColor, strokeColor;
@@ -26,7 +26,7 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	
 	public boolean isDirty;
 	
-	public FDCanvas()
+	public BDCanvas()
 	{
 		super();
 		currentTool = 0;
@@ -133,17 +133,17 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 				switch(Integer.parseInt(parts[0])) {
 				case 1: // line
 					System.out.println("Creating a line from file.");
-					FDLine tempLine = new FDLine(parts);
+					BDLine tempLine = new BDLine(parts);
 					shapes.add(tempLine);
 					break;
 				case 2: // rectangle
 					System.out.println("Creating a rectangle from file.");
-					FDRect tempRect = new FDRect(parts);
+					BDRect tempRect = new BDRect(parts);
 					shapes.add(tempRect);
 					break;
 				case 3: // ellipse
 					System.out.println("Creating an ellipse from file.");
-					FDEllipse tempEllipse = new FDEllipse(parts);
+					BDEllipse tempEllipse = new BDEllipse(parts);
 					shapes.add(tempEllipse);
 					break;
 //				case 4: // polygon
@@ -229,7 +229,7 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 		mouseStartY = me.getY();
 		if (currentTool == Shape.LINE_TYPE)
 		{
-			FDLine tempLine = new FDLine();
+			BDLine tempLine = new BDLine();
 			tempLine.setFill(fillColor);
 			tempLine.setStroke(strokeColor);
 			tempLine.setPoints(mouseStartX, mouseStartY, mouseStartX, mouseStartY);
@@ -237,7 +237,7 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 		}
 		else if (currentTool == Shape.RECT_TYPE)
 		{
-			FDRect tempRect = new FDRect();
+			BDRect tempRect = new BDRect();
 			tempRect.setFill(fillColor);
 			tempRect.setStroke(strokeColor);
 			tempRect.setPoints(mouseStartX, mouseStartY, mouseStartX, mouseStartY);
@@ -245,7 +245,7 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 		}
 		else if (currentTool == Shape.OVAL_TYPE)
 		{
-			FDEllipse tempEllipse = new FDEllipse();
+			BDEllipse tempEllipse = new BDEllipse();
 			tempEllipse.setFill(fillColor);
 			tempEllipse.setStroke(strokeColor);
 			tempEllipse.setPoints(mouseStartX, mouseStartY, mouseStartX, mouseStartY);
@@ -294,19 +294,19 @@ public class FDCanvas extends JPanel implements MouseListener, MouseMotionListen
 		if (currentTool == Shape.LINE_TYPE)
 		{
 			if (tempShape != null)
-			((FDLine)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
+			((BDLine)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
 			repaint();
 		}
 		else if (currentTool == Shape.RECT_TYPE)
 		{
 			if (tempShape != null)
-			((FDRect)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
+			((BDRect)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
 			repaint();
 		}
 		else if (currentTool == Shape.OVAL_TYPE)
 		{
 			if (tempShape != null)
-			((FDEllipse)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
+			((BDEllipse)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
 			repaint();
 		}
 	}

@@ -9,22 +9,22 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class FalconDrawFrame extends JFrame implements ActionListener
+public class BuckDrawFrame extends JFrame implements ActionListener
 {
-	private FDToolbar toolPanel;
-	private FDCanvas canvasPanel;
+	private BDToolbar toolPanel;
+	private BDCanvas canvasPanel;
 	private JMenuItem newMI, openMI, saveMI, saveAsMI;
 	private JMenuItem cutMI, copyMI, pasteMI, duplicateMI, selectAllMI, groupMI;
 	private File theFile;
 	
-	public FalconDrawFrame()
+	public BuckDrawFrame()
 	{
 		super("Falcon Draw");
 		setSize(1200,900);
 		setupMenus();
 		getContentPane().setLayout(new BorderLayout());
-		canvasPanel = new FDCanvas();
-		toolPanel = new FDToolbar(canvasPanel);
+		canvasPanel = new BDCanvas();
+		toolPanel = new BDToolbar(canvasPanel);
 		getContentPane().add(toolPanel, BorderLayout.WEST);
 		getContentPane().add(canvasPanel, BorderLayout.CENTER);
 		setVisible(true);
