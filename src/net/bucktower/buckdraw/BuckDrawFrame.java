@@ -1,3 +1,4 @@
+package net.bucktower.buckdraw;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,7 @@ public class BuckDrawFrame extends JFrame implements ActionListener
 	
 	public BuckDrawFrame()
 	{
-		super("Falcon Draw");
+		super("BuckDraw");
 		setSize(1200,900);
 		setupMenus();
 		getContentPane().setLayout(new BorderLayout());

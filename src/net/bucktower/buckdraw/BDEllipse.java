@@ -1,3 +1,4 @@
+package net.bucktower.buckdraw;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
