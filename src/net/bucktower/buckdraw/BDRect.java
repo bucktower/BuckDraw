@@ -1,4 +1,5 @@
 package net.bucktower.buckdraw;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -47,7 +48,11 @@ public class BDRect extends Shape {
 		int maxX = Math.max(x1, x2);
 		int maxY = Math.max(y1, y2);
 		if(getStroke() != null) {
-			g.setColor(getStroke());
+			if(isSelected) {
+				g.setColor(Color.blue);
+			} else {
+				g.setColor(getStroke());
+			}
 			g.drawRect(minX, minY, maxX-minX-1, maxY-minY-1); // drawRect adds an additional 1 pixel onto usual length & width
 		}
 		if(getFill() != null) {

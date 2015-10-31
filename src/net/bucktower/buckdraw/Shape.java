@@ -12,6 +12,8 @@ public abstract class Shape {
 	public static final int RECT_TYPE = 2; // class and is shared by all the members of the class.
 	public static final int OVAL_TYPE = 3; // "final" means it's a constant. So these TYPE variables
 	public static final int POLYGON_TYPE = 4; // are shared constants that are publicly accessible.
+	
+	public boolean isSelected = false;
 
 	
 	public Shape(String[] data, int startIndex)
@@ -90,10 +92,10 @@ public abstract class Shape {
 
 	/**
 	 * used by the canvas to determine whether a user's drag-select would be able to select this item.
-	 * @param r - the selection rectangle
+	 * @param selectionRect - the selection rectangle
 	 * @return whether this shape is contained inside this rectangle.
 	 */
-	public abstract boolean containedInRect(Rectangle r);
+	public abstract boolean containedInRect(Rectangle selectionRect);
 	
 	/**
 	 * gives back a code number (one of the constants in the Shape class) indicating what type 

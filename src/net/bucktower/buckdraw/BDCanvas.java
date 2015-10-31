@@ -2,6 +2,7 @@ package net.bucktower.buckdraw;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -24,6 +25,7 @@ public class BDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	private int mouseStartX, mouseStartY;
 	
 	private ArrayList<Shape> shapes;
+	private ArrayList<Shape> shapesClipboard;
 	
 	public boolean isDirty;
 	
@@ -198,14 +200,37 @@ public class BDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	public void handleCutMenuItem()
 	{
 		System.out.println("User selected cut.");
+		/*for(Shape s: shapes) {
+			if(s.isSelected == true) {
+				shapesClipboard.add(s);
+				shapes.remove(s);
+				s.isSelected = false;
+			}
+		}
+		shapeListHasChangedSinceLastDraw = true;
+		repaint();*/
 	}
 	public void handleCopyMenuItem()
 	{
 		System.out.println("User selected copy.");
+		/*for(Shape s: shapes) {
+			if(s.isSelected == true) {
+				shapesClipboard.add(s);
+				s.isSelected = false;
+			}
+		}
+		shapeListHasChangedSinceLastDraw = true;
+		repaint();*/
 	}
 	public void handlePasteMenuItem()
 	{
 		System.out.println("User selected paste.");
+		/*for(Shape s: shapesClipboard) {
+			shapes.add(s);
+			s.isSelected = false;
+		}
+		shapeListHasChangedSinceLastDraw = true;
+		repaint();*/
 	}
 	public void handleDuplicateMenuItem()
 	{
@@ -214,6 +239,9 @@ public class BDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	public void handleSelectAllMenuItem()
 	{
 		System.out.println("User selected select all.");
+		for(Shape s: shapes) {
+			s.isSelected = true;
+		}
 	}
 	public void handleGroupMenuItem()
 	{
@@ -228,7 +256,16 @@ public class BDCanvas extends JPanel implements MouseListener, MouseMotionListen
 		System.out.println("User pressed mouse at: "+me.getX()+", "+me.getY());
 		mouseStartX = me.getX();
 		mouseStartY = me.getY();
-		if (currentTool == Shape.LINE_TYPE)
+		
+		// selection = tool 0
+		if(currentTool == 0) {
+			BDRect tempRect = new BDRect();
+			tempRect.setFill(null);
+			tempRect.setStroke(Color.blue);
+			tempRect.setPoints(mouseStartX, mouseStartY, mouseStartX, mouseStartY);
+			tempShape = tempRect;
+		}
+		else if (currentTool == Shape.LINE_TYPE)
 		{
 			BDLine tempLine = new BDLine();
 			tempLine.setFill(fillColor);
@@ -256,6 +293,27 @@ public class BDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	public void mouseReleased(MouseEvent me)
 	{
 		if(tempShape != null) {
+			if (currentTool == 0)
+			{
+				Rectangle selectionRect = new Rectangle();
+				selectionRect.setBounds(mouseStartX, mouseStartY, me.getX()-mouseStartX, me.getY()-mouseStartY);
+				if(selectionRect.getHeight() == 0 && selectionRect.getWidth() == 0) {
+					for(Shape s: shapes) {
+						s.isSelected = false;
+					}
+					System.out.println("All shapes have been deselected");
+				} else {
+					for(Shape s: shapes) {
+						if(s.containedInRect(selectionRect)) {
+							s.isSelected = true;
+							System.out.println(s + " is selected.");
+						}
+					}
+				}
+				shapeListHasChangedSinceLastDraw = true;
+				tempShape = null;
+				repaint();
+			}
 			if (currentTool == Shape.LINE_TYPE || currentTool == Shape.RECT_TYPE || currentTool == Shape.OVAL_TYPE)
 			{
 				shapes.add(tempShape);
@@ -276,7 +334,7 @@ public class BDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	}
 	public void mouseExited(MouseEvent me)
 	{
-		if (currentTool == Shape.LINE_TYPE || currentTool == Shape.RECT_TYPE || currentTool == Shape.OVAL_TYPE)
+		if (currentTool == 0 || currentTool == Shape.LINE_TYPE || currentTool == Shape.RECT_TYPE || currentTool == Shape.OVAL_TYPE)
 		{
 			tempShape = null;
 			repaint();
@@ -292,7 +350,13 @@ public class BDCanvas extends JPanel implements MouseListener, MouseMotionListen
 	}
 	public void mouseDragged(MouseEvent me)
 	{
-		if (currentTool == Shape.LINE_TYPE)
+		if (currentTool == 0)
+		{
+			if (tempShape != null)
+			((BDRect)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());
+			repaint();
+		}
+		else if (currentTool == Shape.LINE_TYPE)
 		{
 			if (tempShape != null)
 			((BDLine)tempShape).setPoints(mouseStartX,mouseStartY,me.getX(),me.getY());

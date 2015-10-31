@@ -45,7 +45,11 @@ public class BDLine extends Shape {
 	{
 		if (getStroke()!=null)
 		{
-			g.setColor(getStroke());
+			if(isSelected) {
+				g.setColor(Color.blue);
+			} else {
+				g.setColor(getStroke());
+			}
 			g.drawLine(x1, y1, x2, y2);
 		}
 	}

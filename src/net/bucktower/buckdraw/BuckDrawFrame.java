@@ -55,7 +55,15 @@ public class BuckDrawFrame extends JFrame implements ActionListener
 		
 		String lcOSName = System.getProperty("os.name").toLowerCase();
 		if(lcOSName.startsWith("mac os x")) {
+			// moving toolbar to native
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			
+			// setting application name -- not working for toolbar
+			System.setProperty("com.apple.mrj.application.apple.menu.about.name", "BuckDraw");
+			
+			// use this code to change CTRL -> CMD
+//			fileSaveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, 
+//                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		}
 		
 		JMenuBar myMenubar = new JMenuBar();
